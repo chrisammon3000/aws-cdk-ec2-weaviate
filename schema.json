@@ -1,0 +1,44 @@
+{
+    "classes": [
+        {
+            "class": "Article",
+            "description": "Article",
+            "properties": [
+                {
+                    "dataType": [
+                        "string"
+                    ],
+                    "description": "Title of article",
+                    "name": "title"
+                },
+                {
+                    "dataType": [
+                        "string"
+                    ],
+                    "description": "Text of article",
+                    "name": "text"
+                }
+            ]
+        },
+        {
+            "class": "Author",
+            "description": "Author info",
+            "properties": [
+                {
+                    "dataType": [
+                        "Article"
+                    ],
+                    "description": "articles written by author",
+                    "name": "wroteArticle"
+                },
+                {
+                    "dataType": [
+                        "string"
+                    ],
+                    "description": "Name of author",
+                    "name": "name"
+                }
+            ]
+        }
+    ]
+}

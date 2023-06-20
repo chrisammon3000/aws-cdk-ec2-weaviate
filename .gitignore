@@ -1,0 +1,106 @@
+# System files
+.DS_Store
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+venv/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-$$LOG_FILE
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# VS Code
+.vscode
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv python configuration file
+.python-version
+.venv*
+
+# Profiling tools
+profile*
+fil*
+summary_*
+
+# Environment variables
+.env
+
+# SAM CLI
+.aws-sam
+packaged.yaml
+
+# pytest
+.pytest_cache
+
+# CDK
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+cdk.context.json
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# SSH Keys
+*.cer
+*.rdp
+*.pem
+
+# Project files
+___*
+WORKLOG.md
+data/

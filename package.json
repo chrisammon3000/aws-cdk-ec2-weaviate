@@ -1,0 +1,27 @@
+{
+  "name": "aws-cdk-ec2-weaviate",
+  "version": "0.1.0",
+  "bin": {
+    "aws-cdk-ec2-weaviate": "bin/aws-cdk-ec2-weaviate.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "7.20.1",
+    "@types/node": "20.3.1",
+    "@types/prettier": "2.7.3",
+    "aws-cdk": "2.84.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.84.0",
+    "constructs": "10.2.54",
+    "dotenv": "16.3.1",
+    "source-map-support": "0.5.21"
+  }
+}
