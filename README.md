@@ -99,10 +99,12 @@ For more information visit the documentation page:
 [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 
 ### Weaviate Configuration
-Configuring Weaviate requires 3 steps:
-1. Download the Docker Compose file.
+Weaviate is configured using EC2 user data in `src/config.sh`. There are 3 main steps:
+1. Download the Docker Compose file from [Weaviate](https://weaviate.io/developers/weaviate/installation/docker-compose).
 2. Update the Docker Compose file to configure Weaviate to persist data and automatically restart on reboot.
 3. Run the Docker Compose file.
+
+All of these steps are handled by the user data script, but keep in mind that if any changes are made the script may need to be updated.
 
 #### Download the Docker Compose File
 Run the command to download a Docker Compose file for Weaviate. To configure Docker Compose via the download URL visit https://weaviate.io/developers/weaviate/installation/docker-compose and use the Configurator.
@@ -144,8 +146,6 @@ awk '
   }
   1' docker-compose.yaml > docker-compose-temp.yaml && mv docker-compose-temp.yaml docker-compose.yaml
 ```
-
-You can customize this script in the User Data (`src/config.sh`) however you desire.
 
 #### Run the Docker Compose File
 Finally, run the command to start Weaviate.
