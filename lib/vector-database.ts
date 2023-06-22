@@ -68,7 +68,7 @@ export class Weaviate extends Construct {
             securityGroup,
             keyName: config.layers.vector_database.env.ssh_key_name,
             role,
-            instanceName: 'amz-odr-vector-database',
+            instanceName: config.tags.app,
             blockDevices: [{
                 deviceName: '/dev/xvda',
                 volume: ec2.BlockDeviceVolume.ebs(16)

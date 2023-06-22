@@ -9,6 +9,6 @@
     },
     "tags": {
         "org": "my-organization",
-        "app": "aws-cdk-ec2-weaviate-key-pair"
+        "app": "aws-cdk-ec2-weaviate"
     }
 }

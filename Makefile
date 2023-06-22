@@ -24,7 +24,7 @@ endif
 deploy: check-env
 	$(info [*] Deploying ${APP_NAME} to ${CDK_DEFAULT_ACCOUNT})
 	@echo "Creating EC2 key pair..."
-	$(MAKE) create-key-pair
+	$(MAKE) key-pair.create
 	@echo "Deploying CDK stack..."
 	@cdk deploy --require-approval never
 	$(MAKE) weaviate.wait
@@ -34,17 +34,20 @@ deploy: check-env
 destroy:
 	$(info [*] Destroying ${APP_NAME} in ${CDK_DEFAULT_ACCOUNT})
 	@cdk destroy
-	@EC2_KEY_PAIR_NAME="$$(jq -r '.layers.vector_database.env.ssh_key_name' ${ROOT_DIR}/config.json)" && \
-	aws ec2 delete-key-pair --key-name "$$EC2_KEY_PAIR_NAME" && \
-	mv ${ROOT_DIR}/$$EC2_KEY_PAIR_NAME.pem ${ROOT_DIR}/deprecated-key-$$(date -u +'%Y-%m-%d-%H-%M').pem
+	$(MAKE) key-pair.delete
 
-create-key-pair: ##=> Checks if the key pair already exists and creates it if it does not
+key-pair.create: ##=> Checks if the key pair already exists and creates it if it does not
 	@echo "$$(date -u +'%Y-%m-%d %H:%M:%S.%3N') - Checking for key pair $$EC2_KEY_PAIR_NAME" 2>&1 | tee -a $$CFN_LOG_PATH
 	@EC2_KEY_PAIR_NAME="$$(jq -r '.layers.vector_database.env.ssh_key_name' ${ROOT_DIR}/config.json)" && \
 	key_pair="$$(aws ec2 describe-key-pairs --key-name $$EC2_KEY_PAIR_NAME | jq -r --arg KEY_PAIR "$$EC2_KEY_PAIR_NAME" '.KeyPairs[] | select(.KeyName == $$KEY_PAIR).KeyName')" && \
 	[ "$$key_pair" ] && echo "Key pair found: $$key_pair" && exit 0 || echo "No key pair found..." && \
 	echo "Creating EC2 key pair \"$$EC2_KEY_PAIR_NAME\"" && \
 	aws ec2 create-key-pair --key-name $$EC2_KEY_PAIR_NAME | jq -r '.KeyMaterial' > ${ROOT_DIR}/$$EC2_KEY_PAIR_NAME.pem
+
+key-pair.delete:
+	@EC2_KEY_PAIR_NAME="$$(jq -r '.layers.vector_database.env.ssh_key_name' ${ROOT_DIR}/config.json)" && \
+	aws ec2 delete-key-pair --key-name "$$EC2_KEY_PAIR_NAME" && \
+	mv ${ROOT_DIR}/$$EC2_KEY_PAIR_NAME.pem ${ROOT_DIR}/deprecated-key-$$(date -u +'%Y-%m-%d-%H-%M').pem
 
 weaviate.status:
 	@instance_id=$$(aws ssm get-parameters --names "/${ORGANIZATION}/${APP_NAME}/InstanceId" | jq -r '.Parameters[0].Value') && \
