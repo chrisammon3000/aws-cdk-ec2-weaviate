@@ -199,6 +199,7 @@ chmod 400 aws-cdk-ec2-weaviate-key-pair.pem
 More information about how to SSH into an EC2 instance can be found in the [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html).
 
 ### Weaviate
+You can define your schema any way you desire and use the Make targets to create or delete ths schema. The schema is stored in `schema.json`.
 
 #### Create the Schema
 ```bash

@@ -38,9 +38,9 @@ export class Weaviate extends Construct {
             description: 'Allow SSH (TCP port 22) in',
         });
 
-        // add the load task security group to the weaviate security group
+        // Allow connections from your IP address (set in config.json)
         securityGroup.addIngressRule(
-            ec2.Peer.ipv4('0.0.0.0/0'),
+            ec2.Peer.ipv4(config.layers.vector_database.env.ssh_cidr),
             ec2.Port.tcp(8080),
             'Allow Weaviate access');
 
@@ -49,6 +49,7 @@ export class Weaviate extends Construct {
             ec2.Port.tcp(22),
             'Allow SSH');
 
+        // IAM role for the instance allows SSM access
         const role = new iam.Role(this, 'Role', {
             assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
             managedPolicies: [
@@ -56,7 +57,10 @@ export class Weaviate extends Construct {
             ]
         });
         
+        // Ubuntu 20.04 LTS AMI
         const ami = ec2.MachineImage.fromSsmParameter('/aws/service/canonical/ubuntu/eks/20.04/1.21/stable/current/amd64/hvm/ebs-gp2/ami-id');
+        
+        // create the instance
         const instance = new ec2.Instance(this, 'VectorDatabase', {
             vpc: this.vpc,
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.M6I, ec2.InstanceSize.XLARGE),
@@ -71,6 +75,7 @@ export class Weaviate extends Construct {
             }]
         });
 
+        // add the user data script
         const userData = new Asset(this, 'UserData', {
             path: path.join(__dirname, '../src/config.sh')
         });
@@ -80,7 +85,6 @@ export class Weaviate extends Construct {
             bucketKey: userData.s3ObjectKey
         });
 
-                // provision Ubuntu 20.04 LTS
         instance.userData.addExecuteFileCommand({
             filePath: localPath,
             arguments: '--verbose -y'
@@ -92,12 +96,13 @@ export class Weaviate extends Construct {
             domain: 'vpc'
         });
 
+        // associate the EIP with the instance
         new ec2.CfnEIPAssociation(this, 'EIPAssociation', {
             allocationId: eip.attrAllocationId,
             instanceId: instance.instanceId
         });
 
-        // instance ID ssm parameter
+        // SSM parameters
         const instanceIdSsmParam = new ssm.StringParameter(this, 'InstanceId', {
             parameterName: `/${config.tags.org}/${config.tags.app}/InstanceId`,
             simpleName: false,
