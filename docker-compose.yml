@@ -14,7 +14,7 @@ services:
     ports:
     - 8080:8080
     volumes:
-    - /data/weaviate_data:/var/lib/weaviate
+    - weaviate_data:/var/lib/weaviate
     environment:
       TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
       QNA_INFERENCE_API: 'http://qna-transformers:8080'

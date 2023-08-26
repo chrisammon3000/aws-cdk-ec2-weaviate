@@ -8,7 +8,7 @@ apt-get update -y
 # systemctl restart docker
 mkfs -t ext4 /dev/nvme1n1
 mkdir /data
-mount /dev/nvme1n1 /data
+mount /dev/nvme1n1 /home
 cp /etc/fstab /etc/fstab.bak
 echo '/dev/nvme1n1 /data ext4 defaults,nofail 0 0' | sudo tee -a /etc/fstab
 mount -a
