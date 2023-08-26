@@ -71,7 +71,7 @@ export class Weaviate extends Construct {
             instanceName: config.tags.app,
             blockDevices: [{
                 deviceName: '/dev/xvda',
-                volume: ec2.BlockDeviceVolume.ebs(16)
+                volume: ec2.BlockDeviceVolume.ebs(config.layers.vector_database.env.ebs_volume_size)
             }]
         });
 
