@@ -14,7 +14,7 @@ services:
     ports:
     - 8080:8080
     volumes:
-    - weaviate_data:/var/lib/weaviate
+    - /data/weaviate_data:/var/lib/weaviate
     environment:
       TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
       QNA_INFERENCE_API: 'http://qna-transformers:8080'
@@ -35,6 +35,4 @@ services:
     image: semitechnologies/qna-transformers:distilbert-base-uncased-distilled-squad
     environment:
       ENABLE_CUDA: '0'
-volumes:
-  weaviate_data:
 ...
