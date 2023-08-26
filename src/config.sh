@@ -25,4 +25,7 @@ apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin git -y
 usermod -a -G docker ubuntu
 export REPOSITORY_URL=https://github.com/chrisammon3000/aws-cdk-ec2-weaviate.git
 git clone $REPOSITORY_URL /opt/app
+
+# Create the data directory to be mounted as a persistent volume
+mkdir /data/weaviate_data
 cd /opt/app && docker compose up -d
