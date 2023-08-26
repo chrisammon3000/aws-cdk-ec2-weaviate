@@ -24,5 +24,5 @@ apt-get update -y
 apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin git -y
 usermod -a -G docker ubuntu
 export REPOSITORY_URL=https://github.com/chrisammon3000/aws-cdk-ec2-weaviate.git
-git clone $REPOSITORY_URL /home/ubuntu/app
-cd /home/ubuntu/app && docker compose up -d
+git clone $REPOSITORY_URL /opt/app
+cd /opt/app && docker compose up -d
