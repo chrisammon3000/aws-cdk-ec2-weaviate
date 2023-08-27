@@ -4,7 +4,7 @@
             "env": {
                 "ssh_cidr": "0.0.0.0/0",
                 "ssh_key_name": "aws-cdk-ec2-weaviate-key-pair",
-                "ebs_volume_size": 32
+                "ebs_volume_size": 64
             }
         }
     },

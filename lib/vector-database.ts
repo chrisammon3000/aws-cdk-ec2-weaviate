@@ -57,8 +57,8 @@ export class Weaviate extends Construct {
             ]
         });
         
-        // Ubuntu 20.04 LTS AMI
-        const ami = ec2.MachineImage.fromSsmParameter('/aws/service/canonical/ubuntu/eks/20.04/1.21/stable/current/amd64/hvm/ebs-gp2/ami-id');
+        // Amazon Linux 2 2023 image
+        const ami = ec2.MachineImage.latestAmazonLinux2023();
         
         // create the instance
         const instance = new ec2.Instance(this, 'VectorDatabase', {

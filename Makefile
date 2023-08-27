@@ -76,7 +76,7 @@ weaviate.reboot:
 weaviate.wait:
 	@endpoint=$$(aws ssm get-parameters \
 		--names "/${ORGANIZATION}/${APP_NAME}/WeaviateEndpoint" | jq -r '.Parameters[0].Value') && \
-	timeout=240 && \
+	timeout=360 && \
 	counter=0 && \
 	echo "Waiting for response from Weaviate at $$endpoint..." && \
 	until [ $$(curl -s -o /dev/null -w "%{http_code}" $$endpoint/v1) -eq 200 ] ; do \
