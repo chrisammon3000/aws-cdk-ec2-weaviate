@@ -10,7 +10,6 @@ import * as ssm from 'aws-cdk-lib/aws-ssm';
 export class Weaviate extends Construct {
     public readonly vpc: ec2.IVpc;
     public readonly endpointSsmParamName: string;
-    public readonly loadAmzOdrTaskSecurityGroup: ec2.ISecurityGroup;
     constructor(scope: Construct, id: string) {
         super(scope, id);
 
